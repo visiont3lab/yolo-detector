@@ -32,19 +32,19 @@ def find_person(frame_input,net, CLASSES, COLORS):
             # `detections`, then compute the (x, y)-coordinates of
             # the bounding box for the object
             idx = int(detections[0, 0, i, 1])
-            if CLASSES[idx]=="person":
-                res = True
-                box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
-                (startX, startY, endX, endY) = box.astype("int")
+            #if CLASSES[idx]=="person":
+            res = True
+            box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
+            (startX, startY, endX, endY) = box.astype("int")
 
-                # draw the prediction on the frame
-                label = "{}: {:.2f}%".format(CLASSES[idx],
-                                            confidence * 100)
-                cv2.rectangle(frame, (startX, startY), (endX, endY),
-                            COLORS[idx], 2)
-                y = startY - 15 if startY - 15 > 15 else startY + 15
-                cv2.putText(frame, label, (startX, y),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, COLORS[idx], 2)
+            # draw the prediction on the frame
+            label = "{}: {:.2f}%".format(CLASSES[idx],
+                                        confidence * 100)
+            cv2.rectangle(frame, (startX, startY), (endX, endY),
+                        COLORS[idx], 2)
+            y = startY - 15 if startY - 15 > 15 else startY + 15
+            cv2.putText(frame, label, (startX, y),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, COLORS[idx], 2)
         
     return res, frame
 
@@ -60,7 +60,7 @@ COLORS = np.random.uniform(0, 255, size=(len(CLASSES), 3))
 
 # load our serialized model from disk
 print("[INFO] loading model...")
-net = cv2.dnn.readNetFromCaffe('models/MobileNetSSD_deploy.prototxt.txt','models/MobileNetSSD_deploy.caffemodel')
+net = cv2.dnn.readNetFromCaffe('yolo/MobileNetSSD_deploy.prototxt.txt','yolo/MobileNetSSD_deploy.caffemodel')
 
 # initialze the video stream, allow the camera to sensor to warmup,
 # and initlaize the FPS counter
